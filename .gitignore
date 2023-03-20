@@ -1,0 +1,12 @@
+# Rust crates
+/target/
+
+# Node.js dependencies
+**/node_modules/
+package-lock.json
+
+# Private keys
+**/keys/
+
+#target
+**/target/
