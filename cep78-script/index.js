@@ -35,6 +35,34 @@ async function installContract() {
     try {
         await client.putDeploy(deploy);
         const result = await waitForDeploy(deploy, 120000);
+
+        console.log(result);
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+async function mint() {
+    const args = RuntimeArgs.fromMap({
+        token_owner: CLValueBuilder.key(keys.publicKey),
+        token_meta_data: CLValueBuilder.string('Test metadata'),
+    });
+
+    contract.setContractHash('hash-63f4d7e69764432830187284fe225b204853612eca908507ac9cd452ee89c9da');
+
+    const deploy = contract.callEntrypoint(
+        'mint',
+        args,
+        keys.publicKey,
+        'casper-test',
+        '10000000000', // 10 CSPR 
+        [keys]
+    );
+
+    try {
+        await client.putDeploy(deploy);
+        const result = await waitForDeploy(deploy, 120000);
+        
         console.log(result);
     } catch (error) {
         console.error(error.message);
@@ -61,3 +89,5 @@ async function waitForDeploy(signedDeploy, timeout = 6000) {
 }
 
 installContract();
+
+// mint();
