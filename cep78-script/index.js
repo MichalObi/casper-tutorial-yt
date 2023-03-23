@@ -2,7 +2,7 @@ const { CasperClient, Keys, Contracts, RuntimeArgs, CLValueBuilder, encodeBase16
 const fs = require('fs');
 
 const keys = Keys.Ed25519.loadKeyPairFromPrivateFile('./keys/secret_key.pem');
-const client = new CasperClient('http://188.40.47.161:7777/rpc');
+const client = new CasperClient('http://95.216.44.9:7777/rpc');
 const contract = new Contracts.Contract(client);
 
 async function installContract() {
@@ -31,6 +31,8 @@ async function installContract() {
         'casper-test',
         [keys]
     );
+
+    console.log('deploy', deploy);
 
     try {
         await client.putDeploy(deploy);
@@ -62,14 +64,14 @@ async function mint() {
     try {
         await client.putDeploy(deploy);
         const result = await waitForDeploy(deploy, 120000);
-        
+
         console.log(result);
     } catch (error) {
         console.error(error.message);
     }
 }
 
-async function waitForDeploy(signedDeploy, timeout = 6000) {
+async function waitForDeploy(signedDeploy, timeout = 60000) {
     const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
     const timer = setTimeout(() => {
