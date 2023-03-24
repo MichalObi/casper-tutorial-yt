@@ -2,7 +2,7 @@ const { CasperClient, Keys, Contracts, RuntimeArgs, CLValueBuilder, encodeBase16
 const fs = require('fs');
 
 const keys = Keys.Ed25519.loadKeyPairFromPrivateFile('./keys/secret_key.pem');
-const client = new CasperClient('http://95.216.44.9:7777/rpc');
+const client = new CasperClient('http://188.40.47.161:7777/rpc');
 const contract = new Contracts.Contract(client);
 
 async function installContract() {
@@ -32,8 +32,6 @@ async function installContract() {
         [keys]
     );
 
-    console.log('deploy', deploy);
-
     try {
         await client.putDeploy(deploy);
         const result = await waitForDeploy(deploy, 120000);
@@ -50,7 +48,7 @@ async function mint() {
         token_meta_data: CLValueBuilder.string('Test metadata'),
     });
 
-    contract.setContractHash('hash-63f4d7e69764432830187284fe225b204853612eca908507ac9cd452ee89c9da');
+    contract.setContractHash('hash-e918a6ad4f49e2184731a51ff07825d0a7b8a2bcbf304f106a13a6c2f2214638');
 
     const deploy = contract.callEntrypoint(
         'mint',
@@ -69,6 +67,22 @@ async function mint() {
     } catch (error) {
         console.error(error.message);
     }
+}
+
+function balanceOf() {
+    contract.setContractHash('hash-e918a6ad4f49e2184731a51ff07825d0a7b8a2bcbf304f106a13a6c2f2214638');
+    contract
+        .queryContractDictionary('balances', keys.publicKey.toAccountHashStr().substring(13)) // substring remove 'account-hash'
+        .then(response => console.log(parseInt(response.data._hex, 16)))
+        .catch(error => console.log(error));
+}
+
+function readMetadata() {
+    contract.setContractHash('hash-e918a6ad4f49e2184731a51ff07825d0a7b8a2bcbf304f106a13a6c2f2214638');
+    contract
+        .queryContractDictionary('metadata_raw', '0')
+        .then(response => console.log(response.data))
+        .catch(error => console.log(error));
 }
 
 async function waitForDeploy(signedDeploy, timeout = 60000) {
@@ -90,6 +104,10 @@ async function waitForDeploy(signedDeploy, timeout = 60000) {
     }
 }
 
-installContract();
+// installContract();
 
 // mint();
+
+// balanceOf();
+
+readMetadata();
