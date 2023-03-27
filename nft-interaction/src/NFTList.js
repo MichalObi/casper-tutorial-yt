@@ -20,3 +20,5 @@ function getOwnedNFTs(publicKey) {
         .then(({ data }) => alert(data))
         .catch(({ message }) => alert(message));
 }
+
+export default NFTList;
