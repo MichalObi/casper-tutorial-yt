@@ -8,13 +8,14 @@ import './App.css';
 
 function App() {
   const [publicKey, setPublicKey] = React.useState(null);
+
   return (
     <div>
       <Connect setPublicKey={setPublicKey} />
       <Metadata />
-      <NFTList setPublicKey={setPublicKey}/>
-      <Mint setPublicKey={setPublicKey}/>
-      <Register setPublicKey={setPublicKey}/>
+      <NFTList publicKey={publicKey} />
+      <Mint publicKey={publicKey} />
+      <Register publicKey={publicKey} />
     </div>
   );
 }

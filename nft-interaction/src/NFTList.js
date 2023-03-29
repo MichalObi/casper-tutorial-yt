@@ -16,7 +16,7 @@ function getOwnedNFTs(publicKey) {
         return;
     }
 
-    axiox.get('http://localhost:3001/ownedNFTs?publicKey=' + publicKey)
+    axios.get('http://localhost:3001/ownedNFTs?publicKey=' + publicKey)
         .then(({ data }) => alert(data))
         .catch(({ message }) => alert(message));
 }
