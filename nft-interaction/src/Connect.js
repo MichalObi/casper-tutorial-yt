@@ -9,7 +9,8 @@ function Connect(props) {
 }
 
 function connectSigner(props) {
-    Signer.isConnected()
+    Signer
+        .isConnected()
         .then(s => {
             if (s === false) {
                 Signer.sendConnectionRequest();
