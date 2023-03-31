@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-function NFTList(props) {
+function NFTList({publicKey}) {
     return (
         <div>
-            <button onClick={() => getOwnedNFTs(props.publicKey)}>
+            <button onClick={() => getOwnedNFTs(publicKey)}>
                 Get NFTs Owned
             </button>
         </div>
@@ -16,7 +16,7 @@ function getOwnedNFTs(publicKey) {
         return;
     }
 
-    axios.get('http://localhost:3001/ownedNFTs?publicKey=' + publicKey)
+    axios.get(`http://localhost:3001/ownedNFTs?publicKey=${publicKey}`)
         .then(({ data }) => alert(data))
         .catch(({ message }) => alert(message));
 }

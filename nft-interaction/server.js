@@ -14,7 +14,6 @@ contract.setContractHash('hash-e918a6ad4f49e2184731a51ff07825d0a7b8a2bcbf304f106
 
 app.get('/metadata', async (req, res) => {
     try {
-        console.log('req', req);
         const result = (
             await contract.queryContractDictionary(
                 'metadata_raw',
@@ -29,33 +28,26 @@ app.get('/metadata', async (req, res) => {
 });
 
 app.get('/ownedNFTs', async (req, res) => {
-    let owned = [];
-    const accountHash = CLPublicKey.fromHex(req.query.publicKey).toAccountHashStr().substring(13); // account-hash-
+	const accountHash = CLPublicKey.fromHex(req.query.publicKey).toAccountHashStr().substring(13);
+	var owned = [];
+	try {
+        const pages = (await contract.queryContractDictionary('page_table', accountHash)).data;
 
-    try {
-        const pages = (await contract.queryContractDictionary('page_table', accountHash)); // get list of pages
-
-        // iterate pages containings NFTs
-        for (let i = 0; i < pages.length; i++) {
-            // account has NFTs in this page
-
-            if (pages[i].data) {
-                const page = (await contract.queryContractDictionary(`page_${i.toString()}`, accountHash)).data;
-
-                // iterate page
-                for (let j = 0; j < page.length; j++) {
-
-                    // account own Nft
-                    if (page[j].data) owned.push(i * page.length + j); // return Ordinal Token ID (page table index * page size + page index)
-                }
-            }
-        }
-
-        res.send(pages);
-    } catch (error) {
-        console.log('error', error);
-        res.status(400).send(error.message);
-    }
+		for (var i = 0; i < pages.length; i++) { // Iterate pages containing NFTs
+			if (pages[i].data == true) { // Account has NFTs in this page
+				const page = (await contract.queryContractDictionary('page_' + i.toString(), accountHash)).data;
+                
+				for (var j = 0; j < page.length; j++) {
+					if (page[j].data == true) { // Account owns this NFT
+						owned.push(i * page.length + j) // Page Table Index * Page Size + Page Index = Ordinal Token ID
+					}
+				}
+			}
+		}
+		res.send(pages);
+	} catch (error) {
+		res.status(400).send(error.message);
+	}
 });
 
 app.post('/deploy', async (req, res) => {

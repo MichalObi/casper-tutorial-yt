@@ -12,7 +12,7 @@ function Mint(props) {
 
 async function mint(publicKey) {
     if (publicKey === null) {
-        alert('No public key found, please connect to signer');
+        alert('No public key found, please connect to Signer');
         return;
     }
 
