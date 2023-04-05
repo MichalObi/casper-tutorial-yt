@@ -1,7 +1,7 @@
 const express = require('express'),
     app = express(),
     cors = require('cors'),
-    port = 3001,
+    port = 2761,
     { CasperClient, Contracts, CLPublicKey, DeployUtil } = require('casper-js-sdk');
 
 app.use(express.json());
@@ -10,7 +10,7 @@ app.use(cors());
 const client = new CasperClient('http://188.40.47.161:7777/rpc'),
     contract = new Contracts.Contract(client);
 
-contract.setContractHash('hash-e918a6ad4f49e2184731a51ff07825d0a7b8a2bcbf304f106a13a6c2f2214638');
+contract.setContractHash('hash-bfe89be7ba148347420e4757813edf4fbb55270bb4cfafcad39099b156df56cb');
 
 app.get('/metadata', async (req, res) => {
     try {
@@ -44,7 +44,7 @@ app.get('/ownedNFTs', async (req, res) => {
 				}
 			}
 		}
-		res.send(pages);
+		res.send(owned);
 	} catch (error) {
 		res.status(400).send(error.message);
 	}

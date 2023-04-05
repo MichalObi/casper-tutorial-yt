@@ -19,7 +19,7 @@ async function installContract() {
         identifier_mode: CLValueBuilder.u8(0), // Ordinal,
         metadata_mutability: CLValueBuilder.u8(0), // Immutable,
         burn_mode: CLValueBuilder.u8(0), // Burnable
-        owner_reverse_lookup_mode: CLValueBuilder.u8(1), // No Lookup
+        owner_reverse_lookup_mode: CLValueBuilder.u8(1), // Lookup
         json_schema: CLValueBuilder.string(''), // Empty JSON Schema
     });
 
@@ -104,10 +104,10 @@ async function waitForDeploy(signedDeploy, timeout = 60000) {
     }
 }
 
-// installContract();
+installContract();
 
 // mint();
 
-balanceOf();
+// balanceOf();
 
 // readMetadata();

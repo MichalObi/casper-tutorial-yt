@@ -26,9 +26,9 @@ async function install() {
     }
 }
 
-// install()
-//     .then(deployHash => console.log(deployHash))
-//     .catch(error => console.log(error));
+install()
+    .then(deployHash => console.log(deployHash))
+    .catch(error => console.log(error));
 
 async function update_msg() {
     contract.setContractHash('hash-fd9c48a5f50c96aa90c4ae42166b4034a4daabab8406af5a9777a5d43d09d194');
@@ -59,6 +59,6 @@ function queryMessage() {
     return contract.queryContractData(['message']);
 }
 
-queryMessage()
-    .then(result => console.log(result))
-    .catch(error => console.log(error));
+// queryMessage()
+//     .then(result => console.log(result))
+//     .catch(error => console.log(error));

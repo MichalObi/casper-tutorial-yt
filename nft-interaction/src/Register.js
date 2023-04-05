@@ -17,7 +17,7 @@ async function register(publicKey) {
 
     const contract = new Contracts.Contract();
 
-    contract.setContractHash('hash-e918a6ad4f49e2184731a51ff07825d0a7b8a2bcbf304f106a13a6c2f2214638');
+    contract.setContractHash('hash-bfe89be7ba148347420e4757813edf4fbb55270bb4cfafcad39099b156df56cb');
 
     const args = RuntimeArgs.fromMap({ token_owner: CLValueBuilder.key(CLPublicKey.fromHex(publicKey)) });
 
@@ -33,7 +33,7 @@ async function register(publicKey) {
 
     try {
         const signedDeploy = await Signer.sign(jsonDeploy, publicKey),
-            response = await axios.post('http://localhost:3001/deploy', signedDeploy, { headers: { 'Content-Type': 'application/json' } });
+            response = await axios.post('http://localhost:2761/deploy', signedDeploy, { headers: { 'Content-Type': 'application/json' } });
 
         alert(response.data);
     } catch (error) {

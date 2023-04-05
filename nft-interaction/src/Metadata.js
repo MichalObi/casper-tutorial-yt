@@ -10,7 +10,7 @@ function Metadata(props) {
 }
 
 function getMetadata() {
-    axiox.get('http://localhost:3001/metadata?tokenId=' + document.getElementById('metadataInput').value)
+    axiox.get('http://localhost:2761/metadata?tokenId=' + document.getElementById('metadataInput').value)
         .then(({ data }) => alert(data))
         .catch(({ message }) => alert(message));
 }
